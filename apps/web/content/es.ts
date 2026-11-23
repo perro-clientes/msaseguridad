@@ -50,7 +50,6 @@ const es = {
     },
     clients: {
       eyebrow: "Confían en nosotros",
-      pending: "Logos de aerolíneas clientes (pendientes)",
     },
     operation: {
       eyebrow: "Nuestra operación",

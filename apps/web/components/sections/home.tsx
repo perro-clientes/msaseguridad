@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { href, type Locale } from "@/lib/i18n";
@@ -5,6 +6,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Eyebrow, TwoTone } from "@/components/ui/typography";
 import { Media } from "@/components/ui/media";
 import { serviceCategories } from "@/content/services";
+import { clientLogos, photos } from "@/lib/images";
 import type { Dictionary } from "@/content/es";
 
 type P = { locale: Locale; dict: Dictionary };
@@ -13,15 +15,8 @@ export function Hero({ locale, dict }: P) {
   const h = dict.home.hero;
   return (
     <section className="relative isolate flex min-h-svh flex-col overflow-hidden bg-night text-white">
-      <Media
-        alt=""
-        label={locale === "es" ? "Plataforma de Ezeiza" : "Ezeiza apron"}
-        pendingText={dict.common.imagePending}
-        labelClassName="bottom-auto left-auto right-4 top-20"
-        className="absolute inset-0 -z-10"
-        priority
-      />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+      <Media src={photos.apron} alt="" className="absolute inset-0 -z-10" imageClassName="object-[50%_60%]" priority />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-black/50 via-black/35 to-black/80" />
 
       <div className="shell grid flex-1 content-center gap-10 pb-32 pt-28 lg:grid-cols-12 lg:items-end">
         <h1 className="text-display font-medium lg:col-span-8">
@@ -80,8 +75,11 @@ export function Intro({ locale, dict }: P) {
           <li key={c.slug} className="w-[80%] shrink-0 snap-start sm:w-[45%] lg:w-[calc((100%-2.25rem)/4)]">
             <Link href={href(locale, `/servicios/${c.slug}`)} className="group block">
               <Media
+                src={c.image}
                 alt={c.imageLabel[locale]}
                 label={c.imageLabel[locale]}
+                pendingText={dict.common.imagePending}
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 80vw"
                 className="aspect-[4/5] rounded-lg transition-transform duration-500 group-hover:scale-[0.985]"
               />
               <div className="mt-4 flex items-start justify-between gap-4">
@@ -127,20 +125,31 @@ export function Stats({ dict }: { dict: Dictionary }) {
 }
 
 export function Clients({ dict }: { dict: Dictionary }) {
+  const row = (hidden: boolean) => (
+    <ul aria-hidden={hidden || undefined} className="flex shrink-0 gap-3 pr-3">
+      {clientLogos.map((c) => (
+        <li key={c.src} className="relative h-20 w-40 overflow-hidden rounded-md bg-white">
+          <Image
+            src={c.src}
+            alt={hidden ? "" : c.name}
+            fill
+            sizes="160px"
+            className="object-cover grayscale transition duration-300 hover:grayscale-0"
+          />
+        </li>
+      ))}
+    </ul>
+  );
+
   return (
-    <section className="shell py-14" aria-label={dict.home.clients.eyebrow}>
-      <Eyebrow className="justify-center">{dict.home.clients.eyebrow}</Eyebrow>
-      <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-        {Array.from({ length: 6 }, (_, i) => (
-          <li
-            key={i}
-            className="label grid h-16 place-items-center rounded-md border border-dashed border-ink/15 text-center text-faint"
-          >
-            Logo {i + 1}
-          </li>
-        ))}
-      </ul>
-      <p className="label mt-4 text-center text-faint">{dict.home.clients.pending}</p>
+    <section className="py-14" aria-label={dict.home.clients.eyebrow}>
+      <Eyebrow className="shell justify-center">{dict.home.clients.eyebrow}</Eyebrow>
+      <div className="mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+          {row(false)}
+          {row(true)}
+        </div>
+      </div>
     </section>
   );
 }

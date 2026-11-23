@@ -3,6 +3,7 @@ import { Plus } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Eyebrow, TwoTone } from "@/components/ui/typography";
 import { Media } from "@/components/ui/media";
+import { photos } from "@/lib/images";
 
 /** Encabezado de páginas internas (deja aire para el header fijo). */
 export function PageIntro({
@@ -37,7 +38,7 @@ export function PageIntro({
 export function CtaBand({ title, button, to }: { title: string; button: string; to: string }) {
   return (
     <section className="relative isolate overflow-hidden bg-night">
-      <Media alt="" className="absolute inset-0 -z-10 opacity-70" />
+      <Media src={photos.tower} alt="" className="absolute inset-0 -z-10 opacity-50" />
       <div className="shell flex min-h-[24rem] flex-col items-center justify-center gap-8 py-20 text-center">
         <h2 className="max-w-3xl text-balance text-headline font-medium text-white">{title}</h2>
         <ButtonLink href={to} variant="light" arrow>

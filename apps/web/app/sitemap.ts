@@ -1,15 +1,29 @@
 import type { MetadataRoute } from "next";
-import { href, locales } from "@/lib/i18n";
-import { site } from "@/lib/site";
+import { locales } from "@/lib/i18n";
+import { absoluteUrl, languageAlternates } from "@/lib/seo";
 import { serviceCategories } from "@/content/services";
 
-const paths = ["/", "/servicios", "/nosotros", "/contacto", "/privacidad", ...serviceCategories.map((c) => `/servicios/${c.slug}`)];
+type Entry = { path: string; priority: number; changeFrequency: "monthly" | "yearly" };
 
+const pages: Entry[] = [
+  { path: "/", priority: 1, changeFrequency: "monthly" },
+  { path: "/servicios", priority: 0.9, changeFrequency: "monthly" },
+  ...serviceCategories.map(
+    (c): Entry => ({ path: `/servicios/${c.slug}`, priority: 0.8, changeFrequency: "monthly" }),
+  ),
+  { path: "/nosotros", priority: 0.7, changeFrequency: "yearly" },
+  { path: "/contacto", priority: 0.7, changeFrequency: "yearly" },
+  { path: "/privacidad", priority: 0.2, changeFrequency: "yearly" },
+];
+
+/** Una entrada por idioma, cada una con sus alternativas hreflang. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  return paths.map((p) => ({
-    url: new URL(href("es", p), site.url).toString(),
-    alternates: {
-      languages: Object.fromEntries(locales.map((l) => [l, new URL(href(l, p), site.url).toString()])),
-    },
-  }));
+  return pages.flatMap(({ path, priority, changeFrequency }) =>
+    locales.map((locale) => ({
+      url: absoluteUrl(locale, path),
+      changeFrequency,
+      priority,
+      alternates: { languages: languageAlternates(path, absoluteUrl) },
+    })),
+  );
 }

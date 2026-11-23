@@ -1,14 +1,31 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
+import logoLight from "@/public/logos/MSA-Logo.png";
+import logoDark from "@/public/logos/msa-logo-dark.png";
 
 /**
- * Wordmark provisorio. Reemplazar por el SVG oficial del logo de MSA
- * cuando lo tengamos (el sitio actual solo tiene un PNG).
+ * Logo de MSA. `light` = blanco (para fondos oscuros), `dark` = negro (para fondos claros).
+ * Reemplazar por el SVG oficial cuando lo tengamos.
  */
-export function Logo({ className }: { className?: string }) {
+export function Logo({
+  tone = "light",
+  className,
+  priority,
+  decorative,
+}: {
+  tone?: "light" | "dark";
+  className?: string;
+  priority?: boolean;
+  /** Si va dentro de un link que ya tiene aria-label. */
+  decorative?: boolean;
+}) {
   return (
-    <span className={cn("inline-flex items-baseline gap-1.5 leading-none", className)}>
-      <span className="text-xl font-semibold italic tracking-tight">MSA</span>
-      <span className="label opacity-70">Seguridad</span>
-    </span>
+    <Image
+      src={tone === "light" ? logoLight : logoDark}
+      alt={decorative ? "" : "MSA Seguridad"}
+      priority={priority}
+      sizes="160px"
+      className={cn("h-7 w-auto", className)}
+    />
   );
 }

@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { photos } from "@/lib/images";
 
 type L = Record<Locale, string>;
 
@@ -10,6 +11,8 @@ export type ServiceCategory = {
   summary: L;
   intro: L;
   imageLabel: L;
+  /** Ruta en `public/` (ver lib/images.ts). Sin imagen se muestra el placeholder. */
+  image?: string;
   services: Service[];
 };
 
@@ -31,6 +34,7 @@ export const serviceCategories: ServiceCategory[] = [
       en: "We check every passenger's documents and apply each airline's selection procedures, before and during boarding.",
     },
     imageLabel: { es: "Control en puerta de embarque", en: "Boarding gate control" },
+    image: photos.gates,
     services: [
       {
         title: { es: "Comprobación de documentación", en: "Documentation check" },
@@ -81,7 +85,8 @@ export const serviceCategories: ServiceCategory[] = [
       es: "Inspeccionamos y seguimos el equipaje desde el despacho hasta la bodega de la aeronave, y en arribos hasta la cinta.",
       en: "We screen and track baggage from check-in to the aircraft hold, and on arrival through to the carousel.",
     },
-    imageLabel: { es: "Inspección de equipaje por RX", en: "X-ray baggage screening" },
+    imageLabel: { es: "Cinta de equipajes", en: "Baggage carousel" },
+    image: photos.baggageClaim,
     services: [
       {
         title: { es: "RX de equipaje con equipo propio", en: "Baggage X-ray with our own equipment" },
@@ -132,7 +137,8 @@ export const serviceCategories: ServiceCategory[] = [
       es: "Protegemos la aeronave mientras está en tierra: quién sube, quién se acerca y qué se carga.",
       en: "We protect the aircraft while it is on the ground: who boards, who approaches and what is loaded.",
     },
-    imageLabel: { es: "Aeronave en posición", en: "Aircraft on stand" },
+    imageLabel: { es: "Cabina de la aeronave", en: "Aircraft cabin" },
+    image: photos.cabin,
     services: [
       {
         title: { es: "Control de acceso a bordo", en: "Onboard access control" },
@@ -184,6 +190,7 @@ export const serviceCategories: ServiceCategory[] = [
       en: "We keep the apron safe and clear of debris before and during each flight's turnaround.",
     },
     imageLabel: { es: "Operación en rampa", en: "Ramp operations" },
+    image: photos.airfieldVehicle,
     services: [
       {
         title: { es: "Seguridad en rampa", en: "Ramp security" },
@@ -220,7 +227,8 @@ export const serviceCategories: ServiceCategory[] = [
       es: "Aplicamos controles de seguridad sobre la carga de importación y exportación en la Terminal de Cargas.",
       en: "We apply security controls to import and export cargo at the Cargo Terminal.",
     },
-    imageLabel: { es: "Terminal de cargas", en: "Cargo terminal" },
+    imageLabel: { es: "Contenedores de carga en plataforma", en: "Cargo containers on the apron" },
+    image: photos.cargoApron,
     services: [
       {
         title: { es: "ETD de carga", en: "Cargo ETD" },

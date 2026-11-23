@@ -52,7 +52,6 @@ const en: Dictionary = {
     },
     clients: {
       eyebrow: "Trusted by",
-      pending: "Airline client logos (pending)",
     },
     operation: {
       eyebrow: "Our operation",

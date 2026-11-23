@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { href, locales, stripLocale, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,28 @@ export function Header({ locale, nav }: { locale: Locale; nav: Dictionary["nav"]
   const pathname = usePathname() ?? "/";
   const path = stripLocale(pathname);
   const [open, setOpen] = useState(false);
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  // La home arranca sobre la foto del hero (oscura); el resto sobre fondo claro.
+  const [behindIsDark, setBehindIsDark] = useState(path === "/");
+  const onDark = open || behindIsDark;
+
+  useEffect(() => {
+    let frame = 0;
+    const check = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (logoRef.current) setBehindIsDark(isDarkBehind(logoRef.current));
+      });
+    };
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", check);
+      window.removeEventListener("resize", check);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -33,12 +55,23 @@ export function Header({ locale, nav }: { locale: Locale; nav: Dictionary["nav"]
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="shell flex h-16 items-center justify-between gap-4">
         <Link
+          ref={logoRef}
           href={href(locale)}
           aria-label="MSA Seguridad — inicio"
-          className="flex h-9 items-center rounded-md bg-ink/75 px-3 text-white backdrop-blur-md"
+          className="relative grid"
           onClick={() => setOpen(false)}
         >
-          <Logo />
+          {/* Sin fondo: alternamos la versión blanca/negra según lo que haya detrás. */}
+          <Logo
+            decorative
+            priority
+            className={cn("col-start-1 row-start-1 transition-opacity duration-300", !onDark && "opacity-0")}
+          />
+          <Logo
+            decorative
+            tone="dark"
+            className={cn("col-start-1 row-start-1 transition-opacity duration-300", onDark && "opacity-0")}
+          />
         </Link>
 
         <nav
@@ -130,4 +163,23 @@ function LangSwitch({ locale, path, label }: { locale: Locale; path: string; lab
       ))}
     </div>
   );
+}
+
+/** ¿El fondo de la página detrás de `el` es oscuro? (fotos y placeholders cuentan como oscuros) */
+function isDarkBehind(el: HTMLElement): boolean {
+  const header = el.closest("header");
+  const r = el.getBoundingClientRect();
+  const stack = document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+  for (const node of stack) {
+    if (header?.contains(node)) continue;
+    for (let n: Element | null = node; n; n = n.parentElement) {
+      if (n.tagName === "IMG" || n.getAttribute("role") === "img") return true;
+      const m = getComputedStyle(n).backgroundColor.match(/[\d.]+/g);
+      if (m && (m[3] === undefined || Number(m[3]) > 0.5)) {
+        const [rr, g, b] = m.map(Number);
+        return 0.2126 * rr + 0.7152 * g + 0.0722 * b < 128;
+      }
+    }
+  }
+  return false;
 }

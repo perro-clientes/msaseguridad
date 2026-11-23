@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { hasLocale, href } from "@/lib/i18n";
+import { hasLocale } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { getDictionary } from "@/content/dictionaries";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/privacidad">): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
-  return {
-    title: getDictionary(lang).privacy.title,
-    alternates: { canonical: href(lang, "/privacidad") },
-    robots: { index: true, follow: true },
-  };
+  const title = getDictionary(lang).privacy.title;
+  return pageMetadata({
+    locale: lang,
+    path: "/privacidad",
+    title,
+    description:
+      lang === "es"
+        ? "Cómo trata MSA Seguridad los datos personales que recibe a través de este sitio (Ley 25.326)."
+        : "How MSA Seguridad handles the personal data it receives through this website (Argentine Law 25.326).",
+  });
 }
 
 /*

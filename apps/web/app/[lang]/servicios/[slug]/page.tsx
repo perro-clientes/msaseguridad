@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { hasLocale, href, locales } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionaries";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
+import { JsonLd, breadcrumbLd, serviceLd } from "@/components/seo/json-ld";
 import { getCategory, serviceCategories } from "@/content/services";
 import { Media } from "@/components/ui/media";
 import { Eyebrow } from "@/components/ui/typography";
@@ -23,11 +25,12 @@ export async function generateMetadata({
   const { lang, slug } = await params;
   const category = getCategory(slug);
   if (!hasLocale(lang) || !category) return {};
-  return {
+  return pageMetadata({
+    locale: lang,
+    path: `/servicios/${slug}`,
     title: category.title[lang],
     description: category.intro[lang],
-    alternates: { canonical: href(lang, `/servicios/${slug}`) },
-  };
+  });
 }
 
 export default async function ServiceCategoryPage({ params }: PageProps<"/[lang]/servicios/[slug]">) {
@@ -37,8 +40,18 @@ export default async function ServiceCategoryPage({ params }: PageProps<"/[lang]
   const dict = getDictionary(lang);
   const others = serviceCategories.filter((c) => c.slug !== slug);
 
+  const url = absoluteUrl(lang, `/servicios/${slug}`);
+
   return (
     <>
+      <JsonLd data={serviceLd(category.title[lang], category.intro[lang], url)} />
+      <JsonLd
+        data={breadcrumbLd([
+          { name: dict.nav.home, url: absoluteUrl(lang) },
+          { name: dict.nav.services, url: absoluteUrl(lang, "/servicios") },
+          { name: category.title[lang], url },
+        ])}
+      />
       <section className="shell pb-12 pt-32 md:pt-40">
         <Link
           href={href(lang, "/servicios")}
@@ -60,6 +73,7 @@ export default async function ServiceCategoryPage({ params }: PageProps<"/[lang]
 
       <div className="shell">
         <Media
+          src={category.image}
           alt={category.imageLabel[lang]}
           label={category.imageLabel[lang]}
           pendingText={dict.common.imagePending}

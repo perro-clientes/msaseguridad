@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { hasLocale, href } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { getDictionary } from "@/content/dictionaries";
+import { pageMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact-form";
 import { PageIntro } from "@/components/sections/shared";
 
@@ -11,11 +12,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/contacto">
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = getDictionary(lang);
-  return {
-    title: dict.nav.contact,
-    description: dict.contact.body,
-    alternates: { canonical: href(lang, "/contacto") },
-  };
+  return pageMetadata({ locale: lang, path: "/contacto", title: dict.nav.contact, description: dict.contact.body });
 }
 
 export default async function ContactPage({ params }: PageProps<"/[lang]/contacto">) {

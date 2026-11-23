@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { hasLocale, href } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionaries";
+import { pageMetadata } from "@/lib/seo";
 import { serviceCategories } from "@/content/services";
 import { Media } from "@/components/ui/media";
 import { CtaBand, PageIntro } from "@/components/sections/shared";
@@ -12,11 +13,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/servicios"
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = getDictionary(lang);
-  return {
-    title: dict.nav.services,
-    description: dict.services.body,
-    alternates: { canonical: href(lang, "/servicios") },
-  };
+  return pageMetadata({ locale: lang, path: "/servicios", title: dict.nav.services, description: dict.services.body });
 }
 
 export default async function ServicesPage({ params }: PageProps<"/[lang]/servicios">) {
@@ -51,8 +48,10 @@ export default async function ServicesPage({ params }: PageProps<"/[lang]/servic
                 </ul>
                 <div className="flex items-center justify-end gap-4 md:col-span-2">
                   <Media
+                    src={c.image}
                     alt=""
                     tone="dark"
+                    sizes="112px"
                     className="hidden aspect-[4/3] w-28 rounded-md lg:block"
                   />
                   <ArrowUpRight

@@ -15,8 +15,10 @@ export function Media({
   priority,
   sizes = "100vw",
   labelClassName,
+  imageClassName,
 }: {
   labelClassName?: string;
+  imageClassName?: string;
   src?: string;
   alt: string;
   label?: string;
@@ -29,7 +31,7 @@ export function Media({
   return (
     <div className={cn("relative overflow-hidden", className)}>
       {src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={cn("object-cover", imageClassName)} />
       ) : (
         <div
           role="img"

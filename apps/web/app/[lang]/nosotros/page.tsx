@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, href } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionaries";
+import { pageMetadata } from "@/lib/seo";
 import { Media } from "@/components/ui/media";
+import { photos } from "@/lib/images";
 import { Eyebrow } from "@/components/ui/typography";
 import { CtaBand, PageIntro } from "@/components/sections/shared";
 
@@ -10,11 +12,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/nosotros">
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = getDictionary(lang);
-  return {
-    title: dict.nav.about,
-    description: dict.about.body,
-    alternates: { canonical: href(lang, "/nosotros") },
-  };
+  return pageMetadata({ locale: lang, path: "/nosotros", title: dict.nav.about, description: dict.about.body });
 }
 
 export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros">) {
@@ -29,13 +27,18 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
 
       <div className="shell grid gap-3 md:grid-cols-3">
         <Media
+          src={photos.terminal}
           alt=""
-          label={lang === "es" ? "Equipo MSA" : "MSA team"}
-          pendingText={dict.common.imagePending}
+          sizes="(min-width: 768px) 66vw, 100vw"
           className="aspect-[4/3] rounded-xl md:col-span-2 md:aspect-auto"
           priority
         />
-        <Media alt="" tone="light" className="aspect-[4/5] rounded-xl" />
+        <Media
+          src={photos.traveler}
+          alt=""
+          sizes="(min-width: 768px) 33vw, 100vw"
+          className="aspect-[4/5] rounded-xl"
+        />
       </div>
 
       <section className="shell grid gap-10 py-20 md:py-28 lg:grid-cols-12">

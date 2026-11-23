@@ -3,6 +3,7 @@ import { hasLocale, href } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionaries";
 import { Clients, Hero, Intro, Operation, Stats } from "@/components/sections/home";
 import { CtaBand, Faq } from "@/components/sections/shared";
+import { JsonLd, faqLd } from "@/components/seo/json-ld";
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -17,6 +18,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <Clients dict={dict} />
       <Operation locale={lang} dict={dict} />
       <Faq {...dict.home.faq} />
+      <JsonLd data={faqLd(dict.home.faq.items)} />
       <CtaBand title={dict.home.cta.title} button={dict.home.cta.button} to={href(lang, "/contacto")} />
     </>
   );

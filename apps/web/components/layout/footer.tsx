@@ -68,7 +68,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       </div>
 
       <div className="shell flex flex-col gap-4 border-t border-line-inverse py-6 sm:flex-row sm:items-end sm:justify-between">
-        <Logo className="text-white" />
+        <Logo className="h-12" />
         <p className="label text-white/40">
           © <CurrentYear /> {site.legalName}. {f.rights}
         </p>
