@@ -5,7 +5,7 @@ Monorepo pnpm de PERRO Agency para MSA Seguridad (seguridad aeroportuaria, Ezeiz
 ## Estructura
 
 - `apps/web` — sitio institucional (Next.js 16, App Router, Tailwind 4). Inspirado en el layout del template Webflow Cargo+ (solo como referencia; código y assets propios).
-- `apps/platform` — (pendiente) plataforma multi-tenant del PRD: webapp mobile-first para operarios + panel admin.
+- `apps/platform` — plataforma multi-tenant del PRD (webapp mobile-first para operarios + panel admin). Next 16 + shadcn (base-nova) + Supabase. Puerto 3001. Modelo de datos y reglas en `docs/platform/modelo.md`.
 - `packages/*` — (pendiente) UI y utilidades compartidas.
 
 ## Stack
@@ -15,7 +15,7 @@ Next.js · TypeScript · Tailwind · shadcn/ui · Supabase · Resend · Vercel �
 ## Decisiones vigentes
 
 - El alcance de la plataforma es el PRD acordado; el doc "APP MSA" del cliente no suma alcance.
-- Los datos de la plataforma deben residir en Argentina (Supabase Cloud no tiene región AR: definir hosting).
+- Plataforma = MVP para probar con el cliente: Supabase Cloud por ahora (residencia de datos en AR queda para cuando escale).
 - Idiomas configurables por organización en la plataforma.
 - Operarios usan Android de la empresa.
 
@@ -34,3 +34,14 @@ Next.js · TypeScript · Tailwind · shadcn/ui · Supabase · Resend · Vercel �
 ## Comandos
 
 - `pnpm install` (una vez) y después `pnpm dev` / `pnpm build` / `pnpm lint` desde la raíz (alias de `dev:web` / `build:web`).
+
+## Plataforma (`apps/platform`)
+
+- Supabase: clientes en `lib/supabase/` (`server.ts`, `client.ts`); `proxy.ts` refresca la sesión y manda al login.
+- Migraciones SQL en `apps/platform/supabase/migrations/` (fuente de verdad del esquema). Todo dato de negocio lleva `org_id` + RLS; auditoría por triggers.
+- **Cada tabla nueva necesita sus `GRANT` explícitos** a `authenticated` (este proyecto no los da por defecto: sin ellos todo falla con "permission denied"). `anon` no recibe nada. Ver `20261126000100_grants.sql`.
+- Se aplican con `psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 --single-transaction -f <migración>` (la URL está en `apps/platform/.env.local`). Después correr `supabase/tests/rls_aislamiento.sql` (se revierte solo).
+- Roles: `operario`, `lider`, `jefe_operaciones`, `rrhh`, `admin` (por org) y `is_superadmin` (global, en `profiles`).
+- Planillas: estados pendiente → en_curso → enviada → validada_lider → aprobada / rechazada (la corrige el Líder). "Firma" = nombre + legajo + hora.
+- Comandos: `pnpm dev:platform` / `pnpm build:platform`.
+
