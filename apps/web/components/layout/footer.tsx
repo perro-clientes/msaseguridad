@@ -12,7 +12,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
   return (
     <footer className="overflow-hidden bg-ink text-white">
-      <div aria-hidden className="flex w-max animate-marquee whitespace-nowrap py-10">
+      <div aria-hidden className="flex w-max animate-marquee whitespace-nowrap py-10 [animation-duration:180s]">
         {[0, 1].map((i) => (
           <span key={i} className="pr-12 text-[clamp(3rem,9vw,8rem)] font-medium tracking-tighter">
             {marquee}
@@ -69,9 +69,22 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
       <div className="shell flex flex-col gap-4 border-t border-line-inverse py-6 sm:flex-row sm:items-end sm:justify-between">
         <Logo className="h-12" />
-        <p className="label text-white/40">
-          © <CurrentYear /> {site.legalName}. {f.rights}
-        </p>
+        <div className="label space-y-1.5 text-white/40 sm:text-right">
+          <p>
+            © <CurrentYear /> {site.legalName}. {f.rights}
+          </p>
+          <p>
+            {f.credit}{" "}
+            <a
+              href="https://www.perroagency.com"
+              target="_blank"
+              rel="noopener"
+              className="text-white/70 underline underline-offset-4 transition-colors hover:text-white"
+            >
+              PERRO Agency
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -14,19 +14,19 @@ export const photos = {
   cargoApron: "/images/others/anthony-maw-g0Yer3dwgVI-unsplash.jpg",
 } as const;
 
-/** Logos de clientes (en `public/images/clients`). */
+/** Logos de clientes (en `public/logos/clients`), sin fondo. */
 export const clientLogos = [
-  { name: "Aeropuertos Argentina 2000", src: "/images/clients/client-aerolineas.png" },
-  { name: "Avianca", src: "/images/clients/avianca.png" },
-  { name: "Aeroméxico", src: "/images/clients/client-aeromexico.jpg" },
-  { name: "Qatar Airways", src: "/images/clients/client-qatar.png" },
-  { name: "Ethiopian Airlines", src: "/images/clients/client-ethiopian.png" },
-  { name: "Cubana de Aviación", src: "/images/clients/client-cubana.png" },
-  { name: "Andes Líneas Aéreas", src: "/images/clients/client-andes.png" },
-  { name: "Tampa Cargo", src: "/images/clients/client-tampa.png" },
-  { name: "Sky Lease Cargo", src: "/images/clients/client-skylease.png" },
-  { name: "Sideral Linhas Aéreas", src: "/images/clients/client-sideral.png" },
-  { name: "CMS Airlines Representative", src: "/images/clients/client-cms.png" },
-  { name: "CrossRacer", src: "/images/clients/client-crossracer.png" },
-  { name: "Argentina Ground Support", src: "/images/clients/client-ags.png" },
+  { name: "Aeropuertos Argentina 2000", src: "/logos/clients/aa2000.png" },
+  { name: "Avianca", src: "/logos/clients/avianca.png" },
+  { name: "Aeroméxico", src: "/logos/clients/aeromexico.png" },
+  { name: "Qatar Airways", src: "/logos/clients/qatar.png" },
+  { name: "Ethiopian Airlines", src: "/logos/clients/ethiopian.png" },
+  { name: "Cubana de Aviación", src: "/logos/clients/cubana.png" },
+  { name: "Andes Líneas Aéreas", src: "/logos/clients/andes.png" },
+  { name: "Tampa Cargo", src: "/logos/clients/tampa.png" },
+  { name: "Sky Lease Cargo", src: "/logos/clients/skylease.png" },
+  { name: "Sideral Linhas Aéreas", src: "/logos/clients/sideral.png" },
+  { name: "CMS Airlines Representative", src: "/logos/clients/cms.png" },
+  { name: "CrossRacer", src: "/logos/clients/crossracer.png" },
+  { name: "Argentina Ground Support", src: "/logos/clients/ags.png" },
 ] as const;

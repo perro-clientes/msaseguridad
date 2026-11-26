@@ -76,7 +76,7 @@ export function Header({ locale, nav }: { locale: Locale; nav: Dictionary["nav"]
 
         <nav
           aria-label="Principal"
-          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-lg bg-ink/75 p-1 backdrop-blur-md md:flex"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-lg bg-ink/75 p-1 backdrop-blur-md md:flex lg:p-1.5"
         >
           {items.map((item) => (
             <Link
@@ -84,7 +84,7 @@ export function Header({ locale, nav }: { locale: Locale; nav: Dictionary["nav"]
               href={href(locale, item.path)}
               aria-current={isActive(item.path) ? "page" : undefined}
               className={cn(
-                "label rounded-md px-3 py-2 text-white/70 transition-colors hover:text-white",
+                "label rounded-md px-3 py-2 text-white/70 transition-colors hover:bg-white/10 hover:text-white lg:px-5 lg:py-2.5 lg:text-[0.8125rem]",
                 isActive(item.path) && "bg-white/10 text-white",
               )}
             >

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Eyebrow({
@@ -13,15 +14,12 @@ export function Eyebrow({
   return (
     <p
       className={cn(
-        "flex items-center gap-2 text-xs",
-        inverse ? "text-white/70" : "text-ink/70",
+        "flex items-center gap-2.5 text-base md:text-lg",
+        inverse ? "text-white/80" : "text-ink/80",
         className,
       )}
     >
-      <span
-        aria-hidden
-        className={cn("size-1.5 rounded-full", inverse ? "bg-accent-soft" : "bg-accent")}
-      />
+      <Plus aria-hidden strokeWidth={1.5} className="size-4 shrink-0 md:size-5" />
       {children}
     </p>
   );

@@ -126,15 +126,18 @@ export function Stats({ dict }: { dict: Dictionary }) {
 
 export function Clients({ dict }: { dict: Dictionary }) {
   const row = (hidden: boolean) => (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 gap-3 pr-3">
+    <ul aria-hidden={hidden || undefined} className="flex shrink-0 gap-10 pr-10">
       {clientLogos.map((c) => (
-        <li key={c.src} className="relative h-20 w-40 overflow-hidden rounded-md bg-white">
+        <li key={c.src} className="relative h-20 w-40">
           <Image
             src={c.src}
             alt={hidden ? "" : c.name}
             fill
             sizes="160px"
-            className="object-cover grayscale transition duration-300 hover:grayscale-0"
+            // El carrusel se mueve con transform: el lazy-load del navegador no lo detecta y
+            // deja huecos. Son 13 logos livianos, se cargan de entrada.
+            loading="eager"
+            className="object-cover opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
           />
         </li>
       ))}
@@ -157,69 +160,17 @@ export function Clients({ dict }: { dict: Dictionary }) {
 export function Operation({ locale, dict }: P) {
   const o = dict.home.operation;
   return (
-    <section className="overflow-hidden bg-ink py-20 text-white md:py-28">
+    <section className="relative isolate overflow-hidden bg-ink py-16 text-white md:py-24">
+      <Media src={photos.cargoApron} alt="" className="absolute inset-0 -z-10" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-ink/80" />
       <div className="shell flex flex-col items-center text-center">
         <Eyebrow inverse>{o.eyebrow}</Eyebrow>
         <TwoTone inverse a={o.titleA} b={o.titleB} className="mt-6 max-w-4xl" />
-        <p className="mt-6 max-w-xl text-pretty text-white/60">{o.body}</p>
+        <p className="mt-6 max-w-xl text-pretty text-white">{o.body}</p>
         <ButtonLink href={href(locale, "/contacto")} variant="light" arrow className="mt-8">
           {o.cta}
         </ButtonLink>
-
-        <Radar />
-
-        <ul className="-mt-10 flex max-w-3xl flex-wrap justify-center gap-2">
-          {o.positions.map((p) => (
-            <li
-              key={p}
-              className="label flex items-center gap-2 rounded-md border border-line-inverse bg-white/5 px-3 py-2 text-white/80"
-            >
-              <span aria-hidden className="size-1.5 rounded-full bg-accent-soft" />
-              {p}
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
-  );
-}
-
-/** Radar decorativo (reemplaza al globo del template). */
-function Radar() {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 400 400"
-      className="mt-14 w-full max-w-[34rem] text-white"
-      fill="none"
-    >
-      <defs>
-        <radialGradient id="radar-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#7fa3e3" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#7fa3e3" stopOpacity="0" />
-        </radialGradient>
-        <linearGradient id="radar-sweep" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#7fa3e3" stopOpacity="0" />
-          <stop offset="100%" stopColor="#7fa3e3" stopOpacity="0.45" />
-        </linearGradient>
-      </defs>
-      <circle cx="200" cy="200" r="190" fill="url(#radar-glow)" />
-      {[190, 140, 90, 40].map((r) => (
-        <circle key={r} cx="200" cy="200" r={r} stroke="currentColor" strokeOpacity="0.14" />
-      ))}
-      <path d="M200 10v380M10 200h380" stroke="currentColor" strokeOpacity="0.1" />
-      <g className="origin-center animate-[spin_8s_linear_infinite]" style={{ transformBox: "view-box" }}>
-        <path d="M200 200 L390 200 A190 190 0 0 0 334 66 Z" fill="url(#radar-sweep)" />
-      </g>
-      {[
-        [280, 140],
-        [130, 120],
-        [240, 290],
-        [110, 250],
-        [320, 240],
-      ].map(([x, y]) => (
-        <circle key={`${x}-${y}`} cx={x} cy={y} r="3" fill="#7fa3e3" />
-      ))}
-    </svg>
   );
 }

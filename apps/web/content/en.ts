@@ -59,20 +59,6 @@ const en: Dictionary = {
       titleB: "over twenty positions",
       body: "On every arrival and departure we deploy staff across all critical positions, coordinated by an MSA supervisor.",
       cta: "Work with us",
-      positions: [
-        "Onboard access",
-        "Aircraft check",
-        "Holds",
-        "Apron / stairs",
-        "Baggage escort",
-        "Cargo escort",
-        "Arrivals carousel",
-        "Baggage dispatch",
-        "Perimeter",
-        "Lobby",
-        "Boarding lounge",
-        "X-ray operator",
-      ],
     },
     faq: {
       eyebrow: "FAQ",
@@ -185,6 +171,7 @@ const en: Dictionary = {
     services: "Services",
     rights: "All rights reserved.",
     privacy: "Privacy",
+    credit: "Designed and maintained by",
   },
   notFound: {
     title: "Page not found",

@@ -57,20 +57,6 @@ const es = {
       titleB: "más de veinte posiciones",
       body: "En cada arribo y salida desplegamos personal en todas las posiciones críticas, coordinado por un supervisor MSA.",
       cta: "Trabajá con nosotros",
-      positions: [
-        "Acceso a bordo",
-        "Chequeo de aeronave",
-        "Bodegas",
-        "Pista / escalera",
-        "Acompañamiento de equipaje",
-        "Acompañamiento de carga",
-        "Cinta de arribos",
-        "Despacho de equipaje",
-        "Perímetro",
-        "Lobby",
-        "Sala de embarque",
-        "Operador RX",
-      ],
     },
     faq: {
       eyebrow: "Preguntas frecuentes",
@@ -183,6 +169,7 @@ const es = {
     services: "Servicios",
     rights: "Todos los derechos reservados.",
     privacy: "Privacidad",
+    credit: "Diseñado y mantenido por",
   },
   notFound: {
     title: "Página no encontrada",
