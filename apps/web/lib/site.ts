@@ -2,7 +2,16 @@
 export const site = {
   name: "MSA Seguridad",
   legalName: "MSA Prevención y Control",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://msaseguridad.com.ar",
+  /**
+   * URL pública (canonical, OG, sitemap). Orden: NEXT_PUBLIC_SITE_URL si está seteada;
+   * si no, el dominio de producción que asigna Vercel (hoy msaseguridad.vercel.app,
+   * y msaseguridad.com.ar cuando se conecte el dominio); en local, localhost.
+   */
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
   foundedYear: 1987,
   phone: "+54 9 11 4897-4272",
   phoneHref: "tel:+5491148974272",

@@ -2,7 +2,9 @@ const es = {
   meta: {
     title: "MSA Seguridad — Seguridad aeroportuaria en Ezeiza",
     description:
-      "Empresa de seguridad privada especializada en el ámbito aeroportuario desde 1987. Control de pasajeros, equipaje, aeronaves, rampa y carga en el Aeropuerto Internacional de Ezeiza.",
+      "Seguridad privada aeroportuaria desde 1987: control de pasajeros, equipaje, aeronaves, rampa y carga en el Aeropuerto Internacional de Ezeiza.",
+    contactDescription:
+      "Contactá a MSA Seguridad para cotizar servicios de seguridad aeroportuaria en Ezeiza: pasajeros, equipaje, aeronaves, rampa y carga.",
   },
   nav: {
     home: "Inicio",

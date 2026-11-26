@@ -3,12 +3,14 @@ import { href, locales, type Locale } from "@/lib/i18n";
 import { site } from "@/lib/site";
 
 /**
- * Solo se indexa producción. Los previews de Vercel (VERCEL_ENV=preview) y
- * `next dev` salen con noindex y robots.txt bloqueando todo.
+ * Solo se indexa producción con dominio propio. Los previews de Vercel, `next dev`
+ * y el dominio *.vercel.app (antes de conectar msaseguridad.com.ar) salen con
+ * noindex y robots.txt bloqueando todo, para no competir con el sitio actual.
  */
-export const indexable = process.env.VERCEL_ENV
-  ? process.env.VERCEL_ENV === "production"
-  : process.env.NODE_ENV === "production";
+export const indexable =
+  (process.env.VERCEL_ENV ? process.env.VERCEL_ENV === "production" : process.env.NODE_ENV === "production") &&
+  !new URL(site.url).hostname.endsWith(".vercel.app") &&
+  new URL(site.url).hostname !== "localhost";
 
 const ogLocale: Record<Locale, string> = { es: "es_AR", en: "en_US" };
 

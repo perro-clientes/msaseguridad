@@ -5,6 +5,8 @@ const en: Dictionary = {
     title: "MSA Seguridad — Airport security at Ezeiza",
     description:
       "Private security company specialized in airport operations since 1987. Passenger, baggage, aircraft, ramp and cargo security at Ezeiza International Airport.",
+    contactDescription:
+      "Contact MSA Seguridad for airport security services at Ezeiza: passengers, baggage, aircraft, ramp and cargo.",
   },
   nav: {
     home: "Home",

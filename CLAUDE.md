@@ -27,7 +27,7 @@ Next.js · TypeScript · Tailwind · shadcn/ui · Supabase · Resend · Vercel �
 - `cacheComponents` está activo: nada de `new Date()` / valores no deterministas sin `"use cache"`.
 - Contacto: Server Action + Resend. Sin `RESEND_API_KEY` en dev, loguea y no envía (ver `.env.example`).
 - Imágenes: `components/ui/media.tsx` muestra un placeholder etiquetado hasta tener fotos reales de MSA. Los assets van en `apps/web/public/logos` y `apps/web/public/images`.
-- SEO: cada página arma su metadata con `pageMetadata()` de `lib/seo.ts` (canonical, hreflang, OG, Twitter). JSON-LD en `components/seo/json-ld.tsx`. Imágenes OG estáticas en `public/og/`. Solo producción se indexa (`VERCEL_ENV`); previews salen con noindex.
+- SEO: cada página arma su metadata con `pageMetadata()` de `lib/seo.ts` (canonical, hreflang, OG, Twitter). JSON-LD en `components/seo/json-ld.tsx`. Imágenes OG estáticas en `public/og/`. La URL base sale de `NEXT_PUBLIC_SITE_URL` o, si no está, del dominio de producción de Vercel (`lib/site.ts`). Solo se indexa producción con dominio propio; previews y *.vercel.app salen con noindex (robots.txt deja pasar a los bots de vista previa de links).
 - Logo: `components/ui/logo.tsx` (versión blanca y negra); el header elige según el fondo que tenga detrás.
 - Documentos del cliente (PRD, planillas, mockups) no se versionan: quedan fuera del repo o en `docs/cliente/` (ignorado).
 

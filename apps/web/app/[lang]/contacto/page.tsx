@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/contacto">
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
   const dict = getDictionary(lang);
-  return pageMetadata({ locale: lang, path: "/contacto", title: dict.nav.contact, description: dict.contact.body });
+  return pageMetadata({ locale: lang, path: "/contacto", title: dict.nav.contact, description: dict.meta.contactDescription });
 }
 
 export default async function ContactPage({ params }: PageProps<"/[lang]/contacto">) {
