@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,8 +34,9 @@ export function LoginForm({ next }: { next?: string }) {
           {state.error}
         </p>
       )}
-      <Button type="submit" size="lg" disabled={pending}>
+      <Button type="submit" size="lg" disabled={pending} className="mt-2">
         {pending ? "Ingresando…" : "Ingresar"}
+        <ArrowUpRight data-icon="inline-end" aria-hidden />
       </Button>
     </form>
   );

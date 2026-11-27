@@ -43,5 +43,10 @@ Next.js · TypeScript · Tailwind · shadcn/ui · Supabase · Resend · Vercel �
 - Se aplican con `psql "$SUPABASE_DB_URL" -X -v ON_ERROR_STOP=1 --single-transaction -f <migración>` (la URL está en `apps/platform/.env.local`). Después correr `supabase/tests/rls_aislamiento.sql` (se revierte solo).
 - Roles: `operario`, `lider`, `jefe_operaciones`, `rrhh`, `admin` (por org) y `is_superadmin` (global, en `profiles`).
 - Planillas: estados pendiente → en_curso → enviada → validada_lider → aprobada / rechazada (la corrige el Líder). "Firma" = nombre + legajo + hora.
+- **Design system** (mismo lenguaje que el sitio / Cargo+): tokens en `apps/platform/app/globals.css` mapeados a las variables de shadcn. `--brand` = color de la organización (foco, hover de botones, links); el resto en grises + tinta. Etiquetas con la utilidad `.label` (mono mayúscula 11px).
+- Componentes: `components/ui/*` (shadcn base-nova sobre Base UI, ya reestilados: usan `render={<Button />}` en vez de `asChild`) y `components/brand/*` (Logo, Eyebrow, TwoTone, PageHeader, Stat, StatusBadge). Estados de tareas/planillas/vuelos en `lib/status.ts`.
+- `cn` sale de `@/lib/utils` (paquete `cn` de shadcn con los tamaños `text-display` / `text-headline` registrados); no importar `cn` directo del paquete.
+- Catálogo en `/design` (solo en desarrollo, sin login). Agregar ahí cada componente nuevo.
+- Assets compartidos con el sitio en `apps/platform/public` (logos, logos de clientes, fotos) y `lib/images.ts`. Si cambian en el sitio, copiarlos acá.
 - Comandos: `pnpm dev:platform` / `pnpm build:platform`.
 
