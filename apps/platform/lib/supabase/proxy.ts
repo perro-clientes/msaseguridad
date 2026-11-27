@@ -2,8 +2,12 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 import { hasSupabaseEnv, supabaseKey, supabaseUrl } from "./env";
 
-/** Rutas a las que se entra sin sesión. */
-const publicPaths = ["/login", "/recuperar"];
+/** Rutas a las que se entra sin sesión. `/design` (catálogo) solo en desarrollo. */
+const publicPaths = [
+  "/login",
+  "/recuperar",
+  ...(process.env.NODE_ENV === "production" ? [] : ["/design"]),
+];
 
 /**
  * Refresca la sesión de Supabase en cada request y manda al login a quien no la tenga.
